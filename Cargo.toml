@@ -6,5 +6,5 @@ members = [
     "leptos-spin-macro"
 ]
 exclude = [
-    "templates/*",
+    "templates/content/leptos-ssr",
 ]
