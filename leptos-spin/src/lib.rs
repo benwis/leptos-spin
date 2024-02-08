@@ -16,7 +16,7 @@ use crate::server_fn::handle_server_fns_with_context;
 pub use request_parts::RequestParts;
 pub use response_options::ResponseOptions;
 pub use route_table::RouteTable;
-
+pub use leptos_spin_macro::server;
 pub async fn render_best_match_to_stream<IV>(
     req: IncomingRequest,
     resp_out: ResponseOutparam,
