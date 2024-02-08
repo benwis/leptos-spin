@@ -70,10 +70,7 @@ fn NotFound() -> impl IntoView {
     }
 }
 
-#[server(
-    req=SpinRequest,
-    res=SpinResponse,
-)]
+#[server]
 pub async fn save_count(count: u32) -> Result<(), ServerFnError> {
     println!("Saving value {count}");
     let store = spin_sdk::key_value::Store::open_default()?;
