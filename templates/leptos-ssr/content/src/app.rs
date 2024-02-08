@@ -1,7 +1,11 @@
 use leptos::*;
 use leptos_meta::*;
 use leptos_router::*;
-
+#[cfg(feature="ssr")]
+use leptos_spin::{
+    request::SpinRequest,
+    response::SpinResponse,
+};
 #[component]
 pub fn App() -> impl IntoView {
     // Provides context that manages stylesheets, titles, meta tags, etc.
@@ -66,10 +70,14 @@ fn NotFound() -> impl IntoView {
     }
 }
 
-#[server(SaveCount, "/api")]
+#[server(
+    req=SpinRequest,
+    res=SpinResponse,
+)]
 pub async fn save_count(count: u32) -> Result<(), ServerFnError> {
     println!("Saving value {count}");
     let store = spin_sdk::key_value::Store::open_default()?;
-    store.set_json("{{project-name | snake_case}}_count", &count).map_err(|e| ServerFnError::ServerError(e.to_string()))?;
+    store.set_json("{{project-name | snake_case}}_count", &count)
+        .map_err(|e| ServerFnError::new(e))?;
     Ok(())
 }
